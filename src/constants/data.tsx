@@ -139,3 +139,68 @@ export const FORM_USER_UPDATE_INPUTS = [
     rules: [{ required: true, message: "Please input your email!" }],
   },
 ];
+
+export const FORM_DATA_COLLECTION_INPUTS = [
+  {
+    name: "productType",
+    label: "Product Type",
+    required: true,
+    type: "select",
+    options: [
+      { value: "typeA", label: "Type A" },
+      { value: "typeB", label: "Type B" },
+      { value: "typeC", label: "Type C" },
+      { value: "typeD", label: "Type D" },
+      { value: "typeE", label: "Type E" },
+    ],
+    rules: [{ required: true, message: "Please input your product type!" }],
+  },
+  {
+    name: "category",
+    label: "Category",
+    required: true,
+    type: "select",
+    options: [
+      { value: "categoryA", label: "Category A" },
+      { value: "categoryB", label: "Category B" },
+      { value: "categoryC", label: "Category C" },
+      { value: "categoryD", label: "Category D" },
+      { value: "categoryE", label: "Category E" },
+      { value: "categoryF", label: "Category F" },
+      { value: "categoryG", label: "Category G" },
+    ],
+    rules: [{ required: true, message: "Please input your category!" }],
+  },
+  {
+    name: "description",
+    label: "Description",
+    required: true,
+    type: "textarea",
+    rules: [{ required: true, message: "Please input your description!" }],
+  },
+  {
+    name: "feedback",
+    label: "Feedback",
+    required: true,
+    type: "textarea",
+    rules: [{ required: true, message: "Please input your feedback!" }],
+  },
+  {
+    name: "nextAppointmentDate",
+    label: "Next Appointment Date",
+    required: true,
+    type: "datePicker",
+    rules: [
+      { required: true, message: "Please input your next appointment date!" },
+    ],
+  },
+  {
+    name: "nextAppointmentTime",
+    label: "Next Appointment Time",
+    required: true,
+    type: "timePicker",
+    rules: [
+      { required: true, message: "Please input your next appointment time!" },
+    ],
+  },
+];

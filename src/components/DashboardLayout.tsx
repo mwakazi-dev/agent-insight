@@ -2,6 +2,7 @@
 import { Button, Col, Layout, Menu, Row, Typography } from "antd";
 import React, { FC, useState } from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+
 import { SIDER_MENU } from "@/constants/data";
 import useAuth from "@/hooks/useAuth";
 
@@ -15,17 +16,22 @@ const DashboardLayout: FC<Props> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout style={{ background: "red" }}>
+    <Layout>
       <Layout.Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
         theme="light"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
       >
         <div className="demo-logo-vertical" />
         <Menu
           theme="light"
-          mode="inline"
+          mode="vertical"
           defaultSelectedKeys={["1"]}
           items={SIDER_MENU as any}
         />
