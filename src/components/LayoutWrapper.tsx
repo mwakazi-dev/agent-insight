@@ -1,17 +1,23 @@
 "use client";
+
 import React, { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import useAuth from "@/hooks/useAuth";
+import DashboardLayout from "./DashboardLayout";
+import { useDispatch } from "react-redux";
+import { setUsers } from "@/slices/userSlice";
 
 interface Props {
   user: any;
+  users: any[];
   children: React.ReactNode;
 }
 
-const LayoutWrapper: FC<Props> = ({ children, user }) => {
+const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
   const { setAuthState } = useAuth();
   const pathname = usePathname();
+  const dispatch = useDispatch();
 
   const [mounted, setMounted] = useState(false);
 
@@ -29,6 +35,9 @@ const LayoutWrapper: FC<Props> = ({ children, user }) => {
         error: null,
       });
     }
+    if (users?.length > 0) {
+      dispatch(setUsers(users));
+    }
     setMounted(true);
   }, []);
 
@@ -42,7 +51,9 @@ const LayoutWrapper: FC<Props> = ({ children, user }) => {
 
   return (
     <>
-      <main>{children}</main>
+      <DashboardLayout>
+        <main style={{ minHeight: "80vh" }}>{children}</main>
+      </DashboardLayout>
     </>
   );
 };

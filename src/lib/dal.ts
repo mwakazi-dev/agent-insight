@@ -9,6 +9,34 @@ import { AuthErrors, ErrorMessages, Roles, StatusCodes } from "@/types/enums";
 import { verifySession } from "./session";
 import { authService } from "@/services/authService";
 
+export const getUsers = cache(async () => {
+  try {
+    const users = await getAuth().listUsers();
+
+    const allUsers = users.users.map((user) => ({
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+    }));
+
+    return {
+      status: StatusCodes.Ok,
+      success: true,
+      data: {
+        users: allUsers,
+      },
+      message: "Users fetched successfully",
+    };
+  } catch {
+    return {
+      status: StatusCodes.BadRequest,
+      success: false,
+      message: "Unable  to fetch users",
+    };
+  }
+});
+
 export const getUser = cache(async () => {
   const { session } = await verifySession();
 

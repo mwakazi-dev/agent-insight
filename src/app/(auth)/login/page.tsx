@@ -12,8 +12,6 @@ const LoginPage: React.FC = () => {
   const onFinish = (values: any) => {
     const { email, password } = values;
 
-    console.log("Form submitted:", values);
-
     onLogin!(email, password) as any;
   };
 

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Roboto } from "next/font/google";
-import AuthProvider from "@/context/AuthContext";
 
-import "./globals.css";
-import { getUser } from "@/lib/dal";
+import { getUser, getUsers } from "@/lib/dal";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import Providers from "@/components/Providers";
+import "./globals.css";
 
 const fonts = Roboto({
   weight: ["400"],
@@ -25,13 +25,20 @@ export default async function RootLayout({
 }>) {
   const user = await getUser();
 
+  const usersData = await getUsers();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={fonts.className} suppressHydrationWarning>
         <AntdRegistry>
-          <AuthProvider>
-            <LayoutWrapper user={user?.data}>{children}</LayoutWrapper>
-          </AuthProvider>
+          <Providers>
+            <LayoutWrapper
+              user={user?.data}
+              users={usersData?.data?.users as any}
+            >
+              {children}
+            </LayoutWrapper>
+          </Providers>
         </AntdRegistry>
       </body>
     </html>
