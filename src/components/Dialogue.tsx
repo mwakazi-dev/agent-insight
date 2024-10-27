@@ -4,26 +4,23 @@ import { Modal } from "antd";
 interface Props {
   modalTitle?: string;
   isModalOpen: boolean;
-  handleOk?: () => void;
-  handleCancel?: () => void;
   children: React.ReactNode;
   showFooter?: boolean;
+  setModalVisible: (visible: boolean) => void;
 }
 
 const Dialogue: FC<Props> = ({
   isModalOpen,
-  handleOk = () => null,
-  handleCancel = () => null,
   modalTitle,
   children,
   showFooter = true,
+  setModalVisible,
 }) => {
   return (
     <Modal
       title={modalTitle}
       open={isModalOpen}
-      onOk={handleOk}
-      onCancel={handleCancel}
+      onCancel={() => setModalVisible(!isModalOpen)}
       footer={showFooter ? true : null}
     >
       {children}

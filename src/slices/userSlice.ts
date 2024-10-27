@@ -5,10 +5,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserState {
   users: any[];
+  user: any;
 }
 
 const initialState: UserState = {
   users: [],
+  user: null,
 };
 
 export const userSlice = createSlice({
@@ -29,11 +31,15 @@ export const userSlice = createSlice({
         state.users.splice(index, 1);
       }
     },
+    setSelectedUser: (state: any, action: PayloadAction<any>) => {
+      state.user = action.payload;
+    },
   },
 });
 
 export const selectUserById = (state: { user: UserState }, id: string) =>
   state.user.users.find((user) => user.uid === id);
 
-export const { setUsers, addUser, removeUser } = userSlice.actions;
+export const { setUsers, addUser, removeUser, setSelectedUser } =
+  userSlice.actions;
 export default userSlice.reducer;

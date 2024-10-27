@@ -26,16 +26,18 @@ import { RootState } from "@/store/store";
 import { UserDataType } from "@/types/user";
 import Dialogue from "@/components/Dialogue";
 import useModal from "@/hooks/useModal";
-import { deleteUser } from "../actions/admin";
-import { removeUser } from "@/slices/userSlice";
+import { changeUserPassword, deleteUser } from "../actions/admin";
+import { removeUser, setSelectedUser } from "@/slices/userSlice";
 const UsersPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.user.users);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const { modalVisible, setModalVisible } = useModal();
 
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const deleteHandler = async (record: UserDataType) => {
     setIsDeleting(true);
@@ -66,9 +68,41 @@ const UsersPage = () => {
     }
   };
 
-  const changePasswordHandler = (record: UserDataType) => {};
+  const changePasswordHandler = (record: UserDataType) => {
+    dispatch(setSelectedUser(record));
+    setModalVisible(true);
+  };
 
-  const changePasswordSubmitHandler = (values: any) => {};
+  const changePasswordSubmitHandler = async (values: any) => {
+    setIsUpdating(true);
+
+    try {
+      const res = await changeUserPassword(user?.uid, values.password);
+
+      if (res.success) {
+        notification.success({
+          message: `${user?.displayName} password changed successfully!`,
+          placement: "top",
+        });
+      }
+      if (!res.success) {
+        notification.error({
+          message: "Unable to update user password!",
+          placement: "top",
+        });
+      }
+      setIsUpdating(false);
+      setModalVisible(false);
+    } catch (error) {
+      notification.error({
+        message: "Error updating user password!",
+        placement: "top",
+      });
+
+      setIsUpdating(false);
+      setModalVisible(false);
+    }
+  };
 
   const rowClickHandler = (record: UserDataType) => {
     router.push(`/admin/user/edit/${record?.uid}`);
@@ -151,11 +185,15 @@ const UsersPage = () => {
 
   return (
     <>
-      <Dialogue modalTitle="Change Password" isModalOpen={modalVisible}>
-        <Row>
-          <Col>
+      <Dialogue
+        modalTitle={`Change password for ${user?.displayName}`}
+        isModalOpen={modalVisible}
+        setModalVisible={setModalVisible}
+      >
+        <Row justify="center" align="middle" style={{ marginTop: "24px" }}>
+          <Col span={12}>
             <Form
-              name="change-password"
+              name="password"
               onFinish={changePasswordSubmitHandler}
               layout="vertical"
             >
@@ -176,7 +214,13 @@ const UsersPage = () => {
                 <Input.Password size="large" />
               </Form.Item>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  block
+                  loading={isUpdating}
+                  disabled={isUpdating}
+                >
                   Change Password
                 </Button>
               </Form.Item>
