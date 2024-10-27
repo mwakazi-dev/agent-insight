@@ -181,9 +181,8 @@ export const FORM_DATA_COLLECTION_INPUTS = [
   {
     name: "feedback",
     label: "Feedback",
-    required: true,
+    required: false,
     type: "textarea",
-    rules: [{ required: true, message: "Please input your feedback!" }],
   },
   {
     name: "nextAppointmentDate",
@@ -192,15 +191,6 @@ export const FORM_DATA_COLLECTION_INPUTS = [
     type: "datePicker",
     rules: [
       { required: true, message: "Please input your next appointment date!" },
-    ],
-  },
-  {
-    name: "nextAppointmentTime",
-    label: "Next Appointment Time",
-    required: true,
-    type: "timePicker",
-    rules: [
-      { required: true, message: "Please input your next appointment time!" },
     ],
   },
 ];

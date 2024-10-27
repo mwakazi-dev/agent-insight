@@ -3,7 +3,7 @@ import requestHandler from "@/lib/request";
 
 const addFieldData = (payload: any) => {
   return requestHandler.post(
-    `${process.env.NEXT_FIREBASE_DATABASE_URL}/${Endpoints.FIELD_DATA}.json`,
+    `${process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL}/${Endpoints.FIELD_DATA}.json`,
     payload
   );
 };
