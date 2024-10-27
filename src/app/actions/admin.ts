@@ -103,9 +103,9 @@ export async function addRoles(userId: string) {
 export const fetchReports = async (filters: any) => {
   try {
     const reportsRef = ref(db, "fieldData");
-
     let reportQuery = query(reportsRef);
 
+    // Handle date range filtering
     if (filters.dateRange) {
       const [startDate, endDate] = filters.dateRange;
       reportQuery = query(
@@ -116,48 +116,49 @@ export const fetchReports = async (filters: any) => {
       );
     }
 
-    if (filters.productType) {
-      reportQuery = query(
-        reportQuery,
-        orderByChild("productType"),
-        equalTo(filters.productType)
-      );
-    }
+    // For additional filters, you'll need to create separate queries
+    // based on the chosen filter, since Firebase does not support multiple `orderByChild` in a single query.
+    let filteredReports = [];
 
-    if (filters.fieldAgent) {
-      reportQuery = query(
-        reportQuery,
-        orderByChild("userEmail"),
-        equalTo(filters.fieldAgent)
-      );
-    }
-
-    if (filters.location) {
-      reportQuery = query(
-        reportQuery,
-        orderByChild("location"),
-        equalTo(filters.location)
-      );
-    }
-
+    // Fetch all reports first and then filter in-memory if other filters are applied
     const snapshot = await get(reportQuery);
     const reportData = snapshot.val();
+
+    if (reportData) {
+      filteredReports = Object.keys(reportData).map((key) => ({
+        id: key,
+        ...reportData[key],
+      }));
+
+      // Apply additional filters in-memory
+      if (filters.productType) {
+        filteredReports = filteredReports.filter(
+          (report) => report.productType === filters.productType
+        );
+      }
+
+      if (filters.fieldAgent) {
+        filteredReports = filteredReports.filter(
+          (report) => report.userEmail === filters.fieldAgent
+        );
+      }
+
+      if (filters.location) {
+        filteredReports = filteredReports.filter(
+          (report) => report.location === filters.location
+        );
+      }
+    }
 
     return {
       status: StatusCodes.Ok,
       success: true,
       data: {
-        report: reportData
-          ? Object.keys(reportData).map((key) => ({
-              id: key,
-              ...reportData[key],
-            }))
-          : [],
+        report: filteredReports,
       },
       message: "Reports fetched successfully",
     };
   } catch (error) {
-    console.log("Error fetching reports:", error);
     return {
       status: StatusCodes.InternalServerError,
       success: false,

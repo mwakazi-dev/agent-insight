@@ -1,14 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import { Col, notification, Row } from "antd";
+import { Col, notification, Row, Typography } from "antd";
 
 import ReportFilters from "@/components/ReportFilters";
-import RealTimeMap from "@/components/RealTimeMap";
+
 import useAgents from "@/hooks/useAgents";
 import { fetchReports } from "../actions/admin";
 import exportToCSV from "@/lib/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+
+import dynamic from "next/dynamic";
+
+const RealTimeMap = dynamic(() => import("@/components/RealTimeMap"), {
+  ssr: false,
+});
 
 const DashboardPage = () => {
   const { agents } = useAgents();
@@ -16,11 +22,12 @@ const DashboardPage = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const isClient = typeof window !== "undefined";
   const generateReport = async (filters: any) => {
     setLoading(true);
     try {
       const res: any = await fetchReports(filters);
-      console.log(res);
+
       if (res.success) {
         if (res.data?.report?.length > 0) {
           exportToCSV(res.data?.report as any);
@@ -45,6 +52,10 @@ const DashboardPage = () => {
     }
   };
 
+  if (!isClient) {
+    return <Typography.Text>Loading...</Typography.Text>;
+  }
+
   return (
     <div>
       <Row>
@@ -53,9 +64,9 @@ const DashboardPage = () => {
             onGenerateReport={generateReport}
             loading={loading}
             users={users.map((user) => ({
-              key: user.id,
+              key: user.uid,
               label: user.email,
-              value: user.id,
+              value: user.email,
             }))}
           />
         </Col>

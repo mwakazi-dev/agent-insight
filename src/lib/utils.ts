@@ -1,4 +1,5 @@
-import dayjs from "dayjs";
+"use client";
+
 import { parse } from "json2csv";
 
 /**

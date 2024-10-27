@@ -12,19 +12,10 @@ const EditUser = ({ params }: { params: { id: string } }) => {
     selectUserById(state, params.id)
   );
 
-  const handleFInish = (values: any) => {
-    // Call your API to update the user
-  };
-
   return (
     <Row justify="center" align="middle">
       <Col span={8}>
-        <Form
-          name="create-user"
-          layout="vertical"
-          initialValues={user}
-          onFinish={handleFInish}
-        >
+        <Form name="create-user" layout="vertical" initialValues={user}>
           {FORM_USER_UPDATE_INPUTS.map((input) => (
             <Form.Item
               key={input.name}
@@ -45,11 +36,6 @@ const EditUser = ({ params }: { params: { id: string } }) => {
               )}
             </Form.Item>
           ))}
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block size="large">
-              Update User
-            </Button>
-          </Form.Item>
         </Form>
       </Col>
     </Row>
