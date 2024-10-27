@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agent Insight Application - Next.js App router, Ant Design, Firebase
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+The project is a secure web app for field agents to log in, collect product data with geolocation tracking, and sync it with an admin dashboard. The dashboard allows real-time report generation, account management, and data visualization for administrators.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup Instructions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Clone the repository:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+` git clone [https://github.com/mwakazi-dev/agent-insight] cd [agent-insight]`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
 
-## Learn More
+   `npm install`
 
-To learn more about Next.js, take a look at the following resources:
+3. Start the the app:
+   `npm run dev`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Run unit test:
+   `npm run test`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+- `__tests__/`: All Unit tests
+- `app/`: Main application routes
+- `public/`: Images and icons
+- `components/`: Reusable React components
+- `constants/`: For code clarity and consistency
+- `context/`: Context providers to manage global state
+- `hooks/`: Custom React hooks
+- `lib/`: reusable functions and utilities
+- `store/`: makes use of Redux toolkit for global state management
+- `slices/`: slices for Redux state management
+- `services/`: Services for API calls
+- `styles/`: Handle all application styles
+- `types/`: TypeScript type definitions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Key Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Real-time data synchronization using Firebase Realtime Database
+- User authentication and authorization using Firebase Authentication
+- Geolocation tracking for product collection
+- Admin dashboard with real-time report generation, account management, and data visualization
+
+## Approach and Rationale
+
+1. **TypeScript**: Implemented for improved code quality and maintainability.
+
+2. **REST API for Form Submission**: Implemented for compatibility with existing backend systems.
+
+3. **Modular Component Structure**: Enhances reusability and maintainability.
+
+4. **Form Validation**: Ensures data integrity before submission.
+
+5. **Error Handling**: Improves user experience by gracefully handling potential issues.
+
+6. **Loading States**: Provides visual feedback during asynchronous operations.
+
+7. **Eslint and Prettier**: Ensures consistent code style and readability
+
+8. **Ant Design**: Used for UI components and design system.
+
+9. **Firebase Authentication**: Secure user authentication and authorization
+
+10. **Firebase Realtime Database**: Real-time data synchronization
+
+11. **Husky precommit hooks**: Enforces code quality and consistency
+
+12. **Documentation**: Added comments and documentation to enhance code readability and collaboration.
+
+## Future Improvements
+
+- Styling DRY principles
+- Implement Storybook for component documentation, testing and team collaboration
+- Refactor the codebase to follow best practices and improve code quality
+- Improve testing coverage
+- Implement more advanced features like data validation, error handling, and more advanced report generation
+- Implement internationalization and localization
+- Implement more secure authentication and authorization mechanisms
