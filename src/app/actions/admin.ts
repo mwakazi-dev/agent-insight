@@ -7,7 +7,6 @@ import {
   orderByChild,
   startAt,
   endAt,
-  equalTo,
   get,
 } from "firebase/database";
 
@@ -105,7 +104,6 @@ export const fetchReports = async (filters: any) => {
     const reportsRef = ref(db, "fieldData");
     let reportQuery = query(reportsRef);
 
-    // Handle date range filtering
     if (filters.dateRange) {
       const [startDate, endDate] = filters.dateRange;
       reportQuery = query(
@@ -116,11 +114,8 @@ export const fetchReports = async (filters: any) => {
       );
     }
 
-    // For additional filters, you'll need to create separate queries
-    // based on the chosen filter, since Firebase does not support multiple `orderByChild` in a single query.
     let filteredReports = [];
 
-    // Fetch all reports first and then filter in-memory if other filters are applied
     const snapshot = await get(reportQuery);
     const reportData = snapshot.val();
 
@@ -130,7 +125,6 @@ export const fetchReports = async (filters: any) => {
         ...reportData[key],
       }));
 
-      // Apply additional filters in-memory
       if (filters.productType) {
         filteredReports = filteredReports.filter(
           (report) => report.productType === filters.productType

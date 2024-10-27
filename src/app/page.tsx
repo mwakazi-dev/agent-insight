@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Col,
@@ -11,13 +11,13 @@ import {
   Row,
   Select,
 } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
 import { FORM_DATA_COLLECTION_INPUTS } from "@/constants/data";
 import useGeoLocation from "@/hooks/useGeoLocation";
 import { addFieldData } from "./actions/fieldData";
 import { formatDate } from "@/lib/utils";
 import useAuth from "@/hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
 import { clearDataCollected, setDataCollected } from "@/slices/dataCollected";
 import { RootState } from "@/store/store";
 
@@ -25,6 +25,7 @@ const Home = () => {
   const { location } = useGeoLocation();
   const { authState } = useAuth();
   const [form] = Form.useForm();
+
   const dispatch = useDispatch();
   const dataCollected = useSelector(
     (state: RootState) => state.dataCollected.dataCollected

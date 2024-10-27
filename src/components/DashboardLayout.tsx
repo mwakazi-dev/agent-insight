@@ -9,6 +9,8 @@ import {
 
 import { SIDER_MENU } from "@/constants/data";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { Roles } from "@/types/enums";
 
 interface Props {
   children: any;
@@ -16,8 +18,16 @@ interface Props {
 
 const DashboardLayout: FC<Props> = ({ children }) => {
   const { onLogout } = useAuth();
+  const router = useRouter();
+  const { authState } = useAuth();
 
   const [collapsed, setCollapsed] = useState(false);
+
+  const handleSelect = (item: any) => {
+    router.push(`/${SIDER_MENU[+item.key - 1].path}`);
+  };
+
+  const isAdmin = authState?.roles?.includes(Roles.ADMIN);
 
   return (
     <Layout>
@@ -33,12 +43,15 @@ const DashboardLayout: FC<Props> = ({ children }) => {
         }}
       >
         <div className="demo-logo-vertical" />
-        <Menu
-          theme="light"
-          mode="vertical"
-          defaultSelectedKeys={["1"]}
-          items={SIDER_MENU as any}
-        />
+        {isAdmin && (
+          <Menu
+            theme="light"
+            mode="vertical"
+            defaultSelectedKeys={["1"]}
+            items={SIDER_MENU as any}
+            onSelect={handleSelect}
+          />
+        )}
       </Layout.Sider>
       <Layout>
         <Layout.Header style={{ padding: 0, background: "#fff" }}>

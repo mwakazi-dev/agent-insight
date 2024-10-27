@@ -1,10 +1,10 @@
 import L from "leaflet";
 
-import "../styles/marker.css"; // Custom CSS for styling the custom icon
+import "../styles/marker.css";
 
 const customIcon = (name: string) => {
   return L.divIcon({
-    className: "custom-marker-icon", // Custom class for styling
+    className: "custom-marker-icon",
     html: `
       <div class="marker-label">${name}</div>
       <div>

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { useSelector } from "react-redux";
+import { Col, Form, Input, Row } from "antd";
 
 import { selectUserById } from "@/slices/userSlice";
 import { RootState } from "@/store/store";
-import { Button, Col, Form, Input, Row } from "antd";
 import { FORM_USER_UPDATE_INPUTS } from "@/constants/data";
 
 const EditUser = ({ params }: { params: { id: string } }) => {

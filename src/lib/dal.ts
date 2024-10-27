@@ -4,7 +4,7 @@ import { cache } from "react";
 import { getAuth } from "firebase-admin/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
-import { initAdmin } from "../../firebaseAdminConfig";
+import { initAdmin } from "@/../../firebaseAdminConfig";
 import { AuthErrors, ErrorMessages, Roles, StatusCodes } from "@/types/enums";
 import { verifySession } from "./session";
 import { authService } from "@/services/authService";

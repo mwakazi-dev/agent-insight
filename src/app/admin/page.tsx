@@ -26,10 +26,11 @@ import { RootState } from "@/store/store";
 import { UserDataType } from "@/types/user";
 import Dialogue from "@/components/Dialogue";
 import useModal from "@/hooks/useModal";
-import { changeUserPassword, deleteUser } from "../actions/admin";
+import { changeUserPassword, deleteUser } from "@/app/actions/admin";
 import { removeUser, setSelectedUser } from "@/slices/userSlice";
 const UsersPage = () => {
   const router = useRouter();
+
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.user.users);
   const user = useSelector((state: RootState) => state.user.user);

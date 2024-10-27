@@ -25,11 +25,10 @@ interface ExportData {
  */
 const exportToCSV = (data: ExportData[]): void => {
   try {
-    const csv = parse(data); // Converts data to CSV format
+    const csv = parse(data);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
 
-    // Create and trigger the download
     const a = document.createElement("a");
     a.href = url;
     a.download = "report.csv";
@@ -37,7 +36,6 @@ const exportToCSV = (data: ExportData[]): void => {
     a.click();
     document.body.removeChild(a);
 
-    // Cleanup URL object
     window.URL.revokeObjectURL(url);
   } catch (error) {
     console.error("Error exporting to CSV:", error);

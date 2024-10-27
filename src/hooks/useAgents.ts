@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { db } from "@/../../firebaseConfig"; // Adjust the import path as necessary
 import { ref, onValue } from "firebase/database";
+
+import { db } from "@/../../firebaseConfig";
 
 interface Agent {
   id: string;
@@ -9,7 +10,6 @@ interface Agent {
     latitude: number;
     longitude: number;
   };
-  // Add any other agent properties you may need
 }
 
 const useAgents = () => {
@@ -18,7 +18,7 @@ const useAgents = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const agentsRef = ref(db, "fieldData"); // Reference to the agents node
+    const agentsRef = ref(db, "fieldData");
 
     const unsubscribe = onValue(
       agentsRef,

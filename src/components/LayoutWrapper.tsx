@@ -2,10 +2,10 @@
 
 import React, { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useDispatch } from "react-redux";
 
 import useAuth from "@/hooks/useAuth";
 import DashboardLayout from "./DashboardLayout";
-import { useDispatch } from "react-redux";
 import { setUsers } from "@/slices/userSlice";
 
 interface Props {
@@ -17,12 +17,12 @@ interface Props {
 const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
   const { setAuthState } = useAuth();
   const pathname = usePathname();
+
   const dispatch = useDispatch();
 
   const [mounted, setMounted] = useState(false);
 
   const noLayoutRoutes = ["/login"];
-
   const shouldExcludeSidebar = noLayoutRoutes.includes(pathname);
 
   useEffect(() => {

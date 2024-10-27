@@ -8,7 +8,7 @@ export async function createSession(
   expiresIn: number,
   admin: boolean
 ) {
-  const nextCookies = await cookies();
+  const nextCookies = cookies();
 
   nextCookies.set("session", idToken, {
     httpOnly: true,
@@ -26,7 +26,7 @@ export async function createSession(
 }
 
 export const verifySession = cache(async () => {
-  const nextCookies = await cookies();
+  const nextCookies = cookies();
 
   const session = nextCookies.get("session")?.value;
 
@@ -34,7 +34,7 @@ export const verifySession = cache(async () => {
 });
 
 export const deleteSession = async () => {
-  const nextCookies = await cookies();
+  const nextCookies = cookies();
 
   nextCookies.delete("session");
   nextCookies.delete("role");

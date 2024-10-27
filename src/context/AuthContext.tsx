@@ -1,10 +1,10 @@
 "use client";
 
 import { createContext, FC, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Roles } from "@/types/enums";
 import { signin, signout } from "@/app/actions/auth";
-import { useRouter } from "next/navigation";
 
 interface AuthProps {
   authState: {

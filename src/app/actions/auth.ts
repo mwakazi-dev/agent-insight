@@ -1,9 +1,9 @@
 "use server";
 
+import { isRedirectError } from "next/dist/client/components/redirect";
+
 import { authService } from "@/services/authService";
 import { AuthErrors, ErrorMessages, Roles, StatusCodes } from "@/types/enums";
-import { isRedirectError } from "next/dist/client/components/redirect";
-// import { addRoles } from "./admin";
 import { getUserRoles } from "@/lib/dal";
 import { createSession, deleteSession } from "@/lib/session";
 
@@ -80,8 +80,6 @@ export async function signin(email: string, password: string) {
       email,
       password,
     });
-
-    // await addRoles(authData.localId);
 
     const rolesResponse = await getUserRoles(authData?.localId);
 

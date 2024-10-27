@@ -29,13 +29,13 @@ export const FORM_INPUTS = [
 export const SIDER_MENU = [
   {
     key: "1",
-    path: "/",
+    path: "admin/dashboard",
     icon: <DashboardFilled />,
     label: "Dashboard",
   },
   {
     key: "2",
-    path: "/agents",
+    path: "admin",
     icon: <UsergroupAddOutlined />,
     label: "Agents",
   },

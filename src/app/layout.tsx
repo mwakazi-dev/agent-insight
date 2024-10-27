@@ -25,7 +25,7 @@ export default async function RootLayout({
 }>) {
   const user = await getUser();
 
-  const usersData = await getUsers();
+  const allUsers = await getUsers();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -34,7 +34,7 @@ export default async function RootLayout({
           <Providers>
             <LayoutWrapper
               user={user?.data}
-              users={usersData?.data?.users as any}
+              users={allUsers?.data?.users as any}
             >
               {children}
             </LayoutWrapper>

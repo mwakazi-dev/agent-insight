@@ -1,16 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { Col, notification, Row, Typography } from "antd";
+import { useSelector } from "react-redux";
+import dynamic from "next/dynamic";
 
 import ReportFilters from "@/components/ReportFilters";
-
 import useAgents from "@/hooks/useAgents";
-import { fetchReports } from "../actions/admin";
+import { fetchReports } from "@/app/actions/admin";
 import exportToCSV from "@/lib/utils";
-import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-
-import dynamic from "next/dynamic";
 
 const RealTimeMap = dynamic(() => import("@/components/RealTimeMap"), {
   ssr: false,
@@ -22,7 +20,6 @@ const DashboardPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const isClient = typeof window !== "undefined";
   const generateReport = async (filters: any) => {
     setLoading(true);
     try {
@@ -51,10 +48,6 @@ const DashboardPage = () => {
       });
     }
   };
-
-  if (!isClient) {
-    return <Typography.Text>Loading...</Typography.Text>;
-  }
 
   return (
     <div>
