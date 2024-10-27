@@ -1,8 +1,7 @@
 "use client";
-import { Button, Col, Grid, Layout, Menu, Row, Typography } from "antd";
+import { Button, Col, Grid, Layout, Menu, Row } from "antd";
 import React, { FC, useState } from "react";
 import {
-  EnvironmentOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,

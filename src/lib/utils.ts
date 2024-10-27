@@ -9,7 +9,7 @@ import { parse } from "json2csv";
  */
 export const formatDate = (date: any): string => {
   if (date) {
-    return date.format("YYYY-MM-DD HH:mm:ss");
+    return date?.format("YYYY-MM-DD HH:mm:ss");
   } else {
   }
   return "Date is not selected";
