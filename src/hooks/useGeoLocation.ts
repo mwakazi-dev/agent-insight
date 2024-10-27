@@ -14,10 +14,11 @@ type GeoLocationResult = {
 
 const useGeoLocation = (): GeoLocationResult => {
   const [location, setLocation] = useState<GeoLocation>({
-    latitude: null,
-    longitude: null,
-    accuracy: null,
+    latitude: 0.0236,
+    longitude: 37.9062,
+    accuracy: 10,
   });
+
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,7 +35,7 @@ const useGeoLocation = (): GeoLocationResult => {
         (position: GeolocationPosition) => {
           const { latitude, longitude, accuracy } = position.coords;
           if (accuracy <= 10) {
-            // to ensure accuracy within 10 meters
+            //   to ensure accuracy within 10 meters
             setLocation({ latitude, longitude, accuracy });
           } else {
             setError("Could not get a sufficiently accurate location.");

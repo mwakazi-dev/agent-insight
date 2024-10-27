@@ -1,0 +1,10 @@
+.custom-marker-icon .anticon {
+  font-size: 32px;
+  color: rgb(255, 34, 82);
+}
+.marker-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(1, 0, 2);
+  text-align: center;
+}

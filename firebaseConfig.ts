@@ -1,42 +1,13 @@
-import "server-only";
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
-import admin from "firebase-admin";
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.FIREBASE_APP_ID,
+};
 
-interface FirebaseAdminAppParams {
-  projectId: string;
-  clientEmail: string;
-  privateKey: string;
-}
-
-function formatPrivateKey(key: string) {
-  return key.replace(/\\n/g, "\n");
-}
-
-export async function createFirebaseAdminApp(params: FirebaseAdminAppParams) {
-  const privateKey = formatPrivateKey(params.privateKey);
-
-  if (admin?.apps?.length > 0) {
-    return admin?.app();
-  }
-
-  const cert = admin.credential.cert({
-    projectId: params.projectId,
-    clientEmail: params.clientEmail,
-    privateKey,
-  });
-
-  return admin.initializeApp({
-    credential: cert,
-    projectId: params.projectId,
-  });
-}
-
-export async function initAdmin() {
-  const params = {
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID as string,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL as string,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY as string,
-  };
-
-  return createFirebaseAdminApp(params);
-}
+const app = initializeApp(firebaseConfig);
+export const db = getDatabase(app);

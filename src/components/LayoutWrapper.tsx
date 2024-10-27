@@ -29,7 +29,9 @@ const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
     if (user?.email) {
       setAuthState!({
         authenticated: true,
-        username: user?.email,
+        email: user?.email,
+        displayName: user?.displayName,
+        phoneNumber: user?.phoneNumber,
         uid: user?.userId,
         roles: user?.roles,
         error: null,

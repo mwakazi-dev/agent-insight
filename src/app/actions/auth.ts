@@ -97,6 +97,8 @@ export async function signin(email: string, password: string) {
       data: {
         userId: authData?.localId,
         email: authData?.email,
+        displayName: authData?.displayName,
+        phoneNumber: authData?.phoneNumber,
         roles: rolesResponse?.data?.roles?.admin ? [Roles.ADMIN] : [Roles.USER],
       },
       message: "Login successful",

@@ -4,7 +4,7 @@ import { cache } from "react";
 import { getAuth } from "firebase-admin/auth";
 import { isRedirectError } from "next/dist/client/components/redirect";
 
-import { initAdmin } from "../../firebaseConfig";
+import { initAdmin } from "../../firebaseAdminConfig";
 import { AuthErrors, ErrorMessages, Roles, StatusCodes } from "@/types/enums";
 import { verifySession } from "./session";
 import { authService } from "@/services/authService";
@@ -62,6 +62,8 @@ export const getUser = cache(async () => {
       data: {
         userId: user?.data?.users[0]?.localId,
         email: user?.data?.users[0]?.email,
+        displayName: user?.data?.users[0]?.displayName,
+        phoneNumber: user?.data?.users[0]?.phoneNumber,
         roles: rolesResponse?.data?.roles?.admin ? [Roles.ADMIN] : [Roles.USER],
       },
     };

@@ -10,11 +10,13 @@ interface AuthProps {
   authState: {
     authenticated: boolean | null;
     uid: string;
-    username: string | null;
+    email: string | null;
+    displayName: string | null;
+    phoneNumber: string | null;
     roles: Roles[];
     error: string | null;
   };
-  onLogin: (username: string, password: string) => void;
+  onLogin: (email: string, password: string) => void;
   onLogout: () => void;
   isAuthenticating?: boolean;
   setAuthState: (newState: Partial<AuthProps["authState"]>) => void;
@@ -31,14 +33,18 @@ const AuthProvider: FC<Props> = ({ children }) => {
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [authState, setAuthState] = useState<{
     authenticated: boolean | null;
-    username: string | null;
+    email: string | null;
+    displayName: string | null;
+    phoneNumber: string | null;
     uid: string | null;
     roles: Roles[];
     error: string | null;
   }>({
     authenticated: null,
-    username: null,
+    email: null,
     uid: null,
+    displayName: null,
+    phoneNumber: null,
     roles: [],
     error: null,
   });
@@ -53,7 +59,9 @@ const AuthProvider: FC<Props> = ({ children }) => {
       } else {
         setAuthState({
           authenticated: true,
-          username: res?.data?.email ?? "",
+          email: res?.data?.email ?? "",
+          displayName: res?.data?.displayName ?? "",
+          phoneNumber: res?.data?.phoneNumber ?? "",
           uid: res?.data?.userId ?? "",
           roles: res?.data?.roles ?? [Roles.USER],
           error: null,
@@ -78,7 +86,9 @@ const AuthProvider: FC<Props> = ({ children }) => {
     if (res.success) {
       setAuthState({
         authenticated: false,
-        username: null,
+        email: null,
+        displayName: null,
+        phoneNumber: null,
         uid: null,
         roles: [],
         error: null,

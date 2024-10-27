@@ -22,7 +22,7 @@ import { clearDataCollected, setDataCollected } from "@/slices/dataCollected";
 import { RootState } from "@/store/store";
 
 const Home = () => {
-  const { location, isLoading } = useGeoLocation();
+  const { location } = useGeoLocation();
   const { authState } = useAuth();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -41,7 +41,6 @@ const Home = () => {
       description,
       feedback,
       nextAppointmentDate,
-      locationValue,
     } = values;
 
     let payload = {
@@ -49,11 +48,12 @@ const Home = () => {
       category,
       description,
       feedback,
-      locationGeo: location,
-      location: locationValue,
       nextAppointmentDate: formatDate(nextAppointmentDate),
       userId: authState?.uid,
-      userEmail: authState?.username,
+      userEmail: authState?.email,
+      created: Date.now(),
+      userName: authState?.displayName,
+      location,
     };
 
     try {
@@ -125,17 +125,6 @@ const Home = () => {
               )}
             </Form.Item>
           ))}
-          {!isLoading && !location?.latitude && !location?.longitude && (
-            <Form.Item
-              label="Location"
-              name="locationValue"
-              rules={[
-                { required: true, message: "Please input your location!" },
-              ]}
-            >
-              <Input size="large" />
-            </Form.Item>
-          )}
 
           <Form.Item>
             <Button
