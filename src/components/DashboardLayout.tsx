@@ -1,7 +1,11 @@
 "use client";
 import { Button, Col, Layout, Menu, Row, Typography } from "antd";
 import React, { FC, useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+  LogoutOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 
 import { SIDER_MENU } from "@/constants/data";
 import useAuth from "@/hooks/useAuth";
@@ -11,7 +15,7 @@ interface Props {
 }
 
 const DashboardLayout: FC<Props> = ({ children }) => {
-  const { authState } = useAuth();
+  const { onLogout } = useAuth();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -56,9 +60,17 @@ const DashboardLayout: FC<Props> = ({ children }) => {
                   />
                 </Col>
                 <Col>
-                  <Typography.Text type="secondary">
-                    {authState?.username}
-                  </Typography.Text>
+                  <Row justify="center" align="middle">
+                    <Col>
+                      <Button
+                        type="text"
+                        icon={<LogoutOutlined style={{ fontSize: "20px" }} />}
+                        onClick={onLogout}
+                      >
+                        Logout
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>

@@ -18,12 +18,14 @@ export const userSlice = createSlice({
     setUsers: (state: any, action: PayloadAction<any[]>) => {
       state.users = action.payload;
     },
+    addUser: (state: any, action: PayloadAction<any>) => {
+      state.users.push(action.payload);
+    },
   },
 });
 
-// Selector to get a user by ID
 export const selectUserById = (state: { user: UserState }, id: string) =>
   state.user.users.find((user) => user.uid === id);
 
-export const { setUsers } = userSlice.actions;
+export const { setUsers, addUser } = userSlice.actions;
 export default userSlice.reducer;

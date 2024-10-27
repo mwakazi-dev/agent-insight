@@ -2,9 +2,77 @@
 
 import { authService } from "@/services/authService";
 import { AuthErrors, ErrorMessages, Roles, StatusCodes } from "@/types/enums";
+import { isRedirectError } from "next/dist/client/components/redirect";
 // import { addRoles } from "./admin";
 import { getUserRoles } from "@/lib/dal";
 import { createSession, deleteSession } from "@/lib/session";
+
+export async function signup(values: {
+  email: string;
+  password: string;
+  displayName: string;
+  phoneNumber: string;
+}) {
+  const { email, password, displayName, phoneNumber } = values;
+
+  try {
+    const { data: authData } = await authService.signupWIthEmailAndPassword({
+      email,
+      password,
+      displayName,
+      phoneNumber,
+    });
+
+    return {
+      status: StatusCodes.Ok,
+      success: true,
+      data: {
+        id: authData?.localId,
+        email: authData?.email,
+        displayName: authData?.displayName,
+      },
+      message: "Signup successful",
+    };
+  } catch (error: any) {
+    const errorCode = error?.message?.response?.data?.error?.message;
+
+    if (errorCode === AuthErrors.EMAIL_EXISTS) {
+      return {
+        status: 400,
+        success: false,
+        error: {
+          code: AuthErrors.EMAIL_EXISTS,
+          message:
+            "Email already exists. Please use a different email address.",
+        },
+      };
+    }
+
+    const errorNotFound = error?.message?.response?.status;
+
+    if (errorNotFound === StatusCodes.NotFound) {
+      return {
+        status: StatusCodes.NotFound,
+        success: false,
+        error: {
+          code: AuthErrors.NOT_FOUND,
+          message: "The page you're trying to reach isn't here.",
+        },
+      };
+    }
+    if (isRedirectError(error)) {
+      throw error;
+    }
+    return {
+      status: StatusCodes.InternalServerError,
+      success: false,
+      error: {
+        code: AuthErrors.INTERNAL_SERVER_ERROR,
+        message: "Something went wrong. Our team is working on fixing it.",
+      },
+    };
+  }
+}
 
 export async function signin(email: string, password: string) {
   try {

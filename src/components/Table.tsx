@@ -78,30 +78,22 @@ import type { TableColumnsType, TableProps } from "antd";
 //   },
 // ];
 
-const onChange: TableProps<any>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  // console.log("params", pagination, filters, sorter, extra);
-};
+// const onChange: TableProps<any>["onChange"] = (
+//   pagination,
+//   filters,
+//   sorter,
+//   extra
+// ) => {
+//   // console.log("params", pagination, filters, sorter, extra);
+// };
 
 interface Props {
   columns: TableColumnsType<any>;
   data: any[];
   loading?: boolean;
-  onRow: (record: any) => void;
 }
-const DataTable: React.FC<Props> = ({ columns, data, loading, onRow }) => (
-  <Table<any>
-    columns={columns}
-    dataSource={data}
-    onRow={(record) => ({
-      onClick: () => onRow(record),
-    })}
-    loading={loading}
-  />
+const DataTable: React.FC<Props> = ({ columns, data, loading }) => (
+  <Table<any> columns={columns} dataSource={data} loading={loading} />
 );
 
 export default DataTable;

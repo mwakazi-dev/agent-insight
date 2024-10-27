@@ -39,7 +39,7 @@ const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
       dispatch(setUsers(users));
     }
     setMounted(true);
-  }, []);
+  }, [dispatch, setAuthState]);
 
   if (!mounted) {
     return <p>Loading...</p>;

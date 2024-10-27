@@ -48,8 +48,6 @@ const AuthProvider: FC<Props> = ({ children }) => {
     try {
       const res = await signin(email, password);
 
-      console.log(res);
-
       if (!res.success) {
         setAuthState({ ...authState, error: res?.error?.message ?? "" });
       } else {

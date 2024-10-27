@@ -7,10 +7,11 @@ import {
   Input,
   Row,
   TableColumnsType,
+  Tooltip,
   Typography,
 } from "antd";
 import { useSelector } from "react-redux";
-import { CloseOutlined, UnlockFilled } from "@ant-design/icons";
+import { CloseOutlined, EyeOutlined, UnlockFilled } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 import DataTable from "@/components/Table";
@@ -68,22 +69,36 @@ const UsersPage = () => {
       align: "center",
       render: (_, record) => (
         <>
-          <Row justify="center" align="middle" gutter={[8, 16]}>
+          <Row justify="center" align="middle" gutter={[12, 16]}>
             <Col>
-              <Button
-                icon={<CloseOutlined style={{ color: "red" }} />}
-                size="small"
-                type="text"
-                onClick={() => deleteHandler(record)}
-              />
+              <Tooltip placement="bottom" title="Delete user">
+                <Button
+                  icon={<CloseOutlined style={{ color: "red" }} />}
+                  size="small"
+                  type="text"
+                  onClick={() => deleteHandler(record)}
+                />
+              </Tooltip>
             </Col>
             <Col>
-              <Button
-                icon={<UnlockFilled />}
-                type="text"
-                size="small"
-                onClick={() => changePasswordHandler(record)}
-              />
+              <Tooltip placement="bottom" title="Change user password">
+                <Button
+                  icon={<UnlockFilled />}
+                  type="text"
+                  size="small"
+                  onClick={() => changePasswordHandler(record)}
+                />
+              </Tooltip>
+            </Col>
+            <Col>
+              <Tooltip placement="bottom" title="View details">
+                <Button
+                  icon={<EyeOutlined />}
+                  type="text"
+                  size="small"
+                  onClick={() => rowClickHandler(record)}
+                />
+              </Tooltip>
             </Col>
           </Row>
         </>
@@ -144,7 +159,7 @@ const UsersPage = () => {
       </Row>
       <Row>
         <Col span={24}>
-          <DataTable columns={COLUMNS} data={users} onRow={rowClickHandler} />
+          <DataTable columns={COLUMNS} data={users} />
         </Col>
       </Row>
     </>
