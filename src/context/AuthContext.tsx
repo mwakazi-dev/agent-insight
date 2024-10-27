@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 interface AuthProps {
   authState: {
     authenticated: boolean | null;
-    id: string;
+    uid: string;
     username: string | null;
     roles: Roles[];
     error: string | null;
@@ -32,13 +32,13 @@ const AuthProvider: FC<Props> = ({ children }) => {
   const [authState, setAuthState] = useState<{
     authenticated: boolean | null;
     username: string | null;
-    id: string | null;
+    uid: string | null;
     roles: Roles[];
     error: string | null;
   }>({
     authenticated: null,
     username: null,
-    id: null,
+    uid: null,
     roles: [],
     error: null,
   });
@@ -54,7 +54,7 @@ const AuthProvider: FC<Props> = ({ children }) => {
         setAuthState({
           authenticated: true,
           username: res?.data?.email ?? "",
-          id: res?.data?.userId ?? "",
+          uid: res?.data?.userId ?? "",
           roles: res?.data?.roles ?? [Roles.USER],
           error: null,
         });
@@ -79,7 +79,7 @@ const AuthProvider: FC<Props> = ({ children }) => {
       setAuthState({
         authenticated: false,
         username: null,
-        id: null,
+        uid: null,
         roles: [],
         error: null,
       });

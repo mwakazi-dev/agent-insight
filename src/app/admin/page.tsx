@@ -1,17 +1,24 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
   Form,
   Input,
+  notification,
+  Popconfirm,
   Row,
   TableColumnsType,
   Tooltip,
   Typography,
 } from "antd";
-import { useSelector } from "react-redux";
-import { CloseOutlined, EyeOutlined, UnlockFilled } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  CloseOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+  UnlockFilled,
+} from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
 import DataTable from "@/components/Table";
@@ -19,15 +26,44 @@ import { RootState } from "@/store/store";
 import { UserDataType } from "@/types/user";
 import Dialogue from "@/components/Dialogue";
 import useModal from "@/hooks/useModal";
+import { deleteUser } from "../actions/admin";
+import { removeUser } from "@/slices/userSlice";
 const UsersPage = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.user.users);
 
   const { modalVisible, setModalVisible } = useModal();
 
-  const deleteHandler = (record: UserDataType) => {
-    // Call your API to delete the user
-    // You can use the uid to delete the user from the database
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteHandler = async (record: UserDataType) => {
+    setIsDeleting(true);
+
+    try {
+      const res = await deleteUser(record?.uid);
+
+      if (res.success) {
+        dispatch(removeUser(record?.uid));
+        notification.success({
+          message: "User deleted successfully!",
+          placement: "top",
+        });
+      }
+      if (!res.success) {
+        notification.error({
+          message: "Unable to create user!",
+          placement: "top",
+        });
+      }
+      setIsDeleting(false);
+    } catch (error) {
+      notification.error({
+        message: "Error deleting user",
+        placement: "top",
+      });
+      setIsDeleting(false);
+    }
   };
 
   const changePasswordHandler = (record: UserDataType) => {};
@@ -71,14 +107,21 @@ const UsersPage = () => {
         <>
           <Row justify="center" align="middle" gutter={[12, 16]}>
             <Col>
-              <Tooltip placement="bottom" title="Delete user">
-                <Button
-                  icon={<CloseOutlined style={{ color: "red" }} />}
-                  size="small"
-                  type="text"
-                  onClick={() => deleteHandler(record)}
-                />
-              </Tooltip>
+              <Popconfirm
+                title="Delete the user"
+                description="Are you sure?"
+                icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                onConfirm={() => deleteHandler(record)}
+                okButtonProps={{ loading: isDeleting }}
+              >
+                <Tooltip placement="bottom" title="Delete user">
+                  <Button
+                    icon={<CloseOutlined style={{ color: "red" }} />}
+                    size="small"
+                    type="text"
+                  />
+                </Tooltip>
+              </Popconfirm>
             </Col>
             <Col>
               <Tooltip placement="bottom" title="Change user password">

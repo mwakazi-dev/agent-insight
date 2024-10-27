@@ -21,11 +21,19 @@ export const userSlice = createSlice({
     addUser: (state: any, action: PayloadAction<any>) => {
       state.users.push(action.payload);
     },
+    removeUser: (state: any, action: PayloadAction<string>) => {
+      const index = state.users.findIndex(
+        (user: any) => user.uid === action.payload
+      );
+      if (index > -1) {
+        state.users.splice(index, 1);
+      }
+    },
   },
 });
 
 export const selectUserById = (state: { user: UserState }, id: string) =>
   state.user.users.find((user) => user.uid === id);
 
-export const { setUsers, addUser } = userSlice.actions;
+export const { setUsers, addUser, removeUser } = userSlice.actions;
 export default userSlice.reducer;

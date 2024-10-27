@@ -30,7 +30,7 @@ const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
       setAuthState!({
         authenticated: true,
         username: user?.email,
-        id: user?.userId,
+        uid: user?.userId,
         roles: user?.roles,
         error: null,
       });
