@@ -1,16 +1,20 @@
 "use client";
 
-import { Button, Col, DatePicker, Form, Row, Select } from "antd";
-import React from "react";
+import React, { FC } from "react";
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
+import { PRODUCT_TYPES } from "@/constants/data";
 
-const ReportFilters = () => {
-  const handleGenerateReport = (values: any) => {
-    console.log("Generate Report", values);
-  };
+interface Props {
+  onGenerateReport: (values: any) => void;
+  loading: boolean;
+  users: any[];
+}
+
+const ReportFilters: FC<Props> = ({ onGenerateReport, loading, users }) => {
   return (
     <Row>
       <Col span={24}>
-        <Form layout="vertical" onFinish={handleGenerateReport}>
+        <Form layout="vertical" onFinish={onGenerateReport}>
           <Row justify="start" align="middle" gutter={[16, 16]}>
             <Col>
               <Form.Item name="dateRange">
@@ -19,13 +23,13 @@ const ReportFilters = () => {
             </Col>
             <Col>
               <Form.Item name="productType">
-                <Select options={[]} placeholder="Product Type" />
+                <Select options={PRODUCT_TYPES} placeholder="Product Type" />
               </Form.Item>
             </Col>
             <Col>
               <Form.Item name="fieldAgent">
                 <Select
-                  options={[]}
+                  options={users}
                   style={{ width: "100%" }}
                   placeholder="Field Agent"
                 />
@@ -33,16 +37,17 @@ const ReportFilters = () => {
             </Col>
             <Col>
               <Form.Item name="location">
-                <Select
-                  options={[]}
-                  style={{ width: "100%" }}
-                  placeholder="Location"
-                />
+                <Input placeholder="Location" />
               </Form.Item>
             </Col>
             <Col>
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={loading}
+                  disabled={loading}
+                >
                   Generate Report
                 </Button>
               </Form.Item>

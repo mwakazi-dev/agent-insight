@@ -140,19 +140,31 @@ export const FORM_USER_UPDATE_INPUTS = [
   },
 ];
 
+export const CATEGORIES = [
+  { value: "categoryA", label: "Category A" },
+  { value: "categoryB", label: "Category B" },
+  { value: "categoryC", label: "Category C" },
+  { value: "categoryD", label: "Category D" },
+  { value: "categoryE", label: "Category E" },
+  { value: "categoryF", label: "Category F" },
+  { value: "categoryG", label: "Category G" },
+];
+
+export const PRODUCT_TYPES = [
+  { value: "typeA", label: "Type A" },
+  { value: "typeB", label: "Type B" },
+  { value: "typeC", label: "Type C" },
+  { value: "typeD", label: "Type D" },
+  { value: "typeE", label: "Type E" },
+];
+
 export const FORM_DATA_COLLECTION_INPUTS = [
   {
     name: "productType",
     label: "Product Type",
     required: true,
     type: "select",
-    options: [
-      { value: "typeA", label: "Type A" },
-      { value: "typeB", label: "Type B" },
-      { value: "typeC", label: "Type C" },
-      { value: "typeD", label: "Type D" },
-      { value: "typeE", label: "Type E" },
-    ],
+    options: PRODUCT_TYPES,
     rules: [{ required: true, message: "Please input your product type!" }],
   },
   {
@@ -160,15 +172,7 @@ export const FORM_DATA_COLLECTION_INPUTS = [
     label: "Category",
     required: true,
     type: "select",
-    options: [
-      { value: "categoryA", label: "Category A" },
-      { value: "categoryB", label: "Category B" },
-      { value: "categoryC", label: "Category C" },
-      { value: "categoryD", label: "Category D" },
-      { value: "categoryE", label: "Category E" },
-      { value: "categoryF", label: "Category F" },
-      { value: "categoryG", label: "Category G" },
-    ],
+    options: CATEGORIES,
     rules: [{ required: true, message: "Please input your category!" }],
   },
   {

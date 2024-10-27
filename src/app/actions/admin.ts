@@ -1,8 +1,18 @@
 "use server";
 
 import { getAuth } from "firebase-admin/auth";
+import {
+  ref,
+  query,
+  orderByChild,
+  startAt,
+  endAt,
+  equalTo,
+  get,
+} from "firebase/database";
 
 import { StatusCodes } from "@/types/enums";
+import { db } from "../../../firebaseConfig";
 
 export async function changeUserPassword(userId: string, newPassword: string) {
   try {
@@ -89,3 +99,69 @@ export async function addRoles(userId: string) {
     };
   }
 }
+
+export const fetchReports = async (filters: any) => {
+  try {
+    const reportsRef = ref(db, "fieldData");
+
+    let reportQuery = query(reportsRef);
+
+    if (filters.dateRange) {
+      const [startDate, endDate] = filters.dateRange;
+      reportQuery = query(
+        reportQuery,
+        orderByChild("created"),
+        startAt(startDate.valueOf()),
+        endAt(endDate.valueOf())
+      );
+    }
+
+    if (filters.productType) {
+      reportQuery = query(
+        reportQuery,
+        orderByChild("productType"),
+        equalTo(filters.productType)
+      );
+    }
+
+    if (filters.fieldAgent) {
+      reportQuery = query(
+        reportQuery,
+        orderByChild("userEmail"),
+        equalTo(filters.fieldAgent)
+      );
+    }
+
+    if (filters.location) {
+      reportQuery = query(
+        reportQuery,
+        orderByChild("location"),
+        equalTo(filters.location)
+      );
+    }
+
+    const snapshot = await get(reportQuery);
+    const reportData = snapshot.val();
+
+    return {
+      status: StatusCodes.Ok,
+      success: true,
+      data: {
+        report: reportData
+          ? Object.keys(reportData).map((key) => ({
+              id: key,
+              ...reportData[key],
+            }))
+          : [],
+      },
+      message: "Reports fetched successfully",
+    };
+  } catch (error) {
+    console.log("Error fetching reports:", error);
+    return {
+      status: StatusCodes.InternalServerError,
+      success: false,
+      message: "Error fetching reports",
+    };
+  }
+};
