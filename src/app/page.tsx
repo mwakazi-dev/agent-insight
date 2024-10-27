@@ -157,7 +157,7 @@ const Home = () => {
                         size="large"
                         loading={loading}
                         disabled={loading}
-                        style={{ backgroundColor: "#536493" }}
+                        style={{ backgroundColor: "#2F3645" }}
                       >
                         Submit
                       </Button>

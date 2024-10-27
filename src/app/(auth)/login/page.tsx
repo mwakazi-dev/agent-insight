@@ -65,7 +65,7 @@ const LoginPage: React.FC = () => {
               size="large"
               loading={isAuthenticating}
               disabled={isAuthenticating}
-              style={{ backgroundColor: "#536493" }}
+              style={{ backgroundColor: "#2F3645" }}
             >
               Log in
             </Button>

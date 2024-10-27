@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -27,7 +27,8 @@ import { UserDataType } from "@/types/user";
 import Dialogue from "@/components/Dialogue";
 import useModal from "@/hooks/useModal";
 import { changeUserPassword, deleteUser } from "@/app/actions/admin";
-import { removeUser, setSelectedUser } from "@/slices/userSlice";
+import { removeUser, setSelectedUser, setUsers } from "@/slices/userSlice";
+import { getUsers } from "@/lib/dal";
 const UsersPage = () => {
   const router = useRouter();
 
@@ -39,6 +40,7 @@ const UsersPage = () => {
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const deleteHandler = async (record: UserDataType) => {
     setIsDeleting(true);
@@ -55,7 +57,7 @@ const UsersPage = () => {
       }
       if (!res.success) {
         notification.error({
-          message: "Unable to create user!",
+          message: "Unable to delete user!",
           placement: "top",
         });
       }
@@ -113,6 +115,7 @@ const UsersPage = () => {
     {
       title: "ID",
       dataIndex: "uid",
+      responsive: ["md"],
     },
     {
       title: "Email",
@@ -122,6 +125,7 @@ const UsersPage = () => {
       title: "Full Name",
       dataIndex: "displayName",
       align: "center",
+      responsive: ["md"],
       render: (_, record) => (
         <>{record.displayName ? record.displayName : "-"}</>
       ),
@@ -130,6 +134,7 @@ const UsersPage = () => {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       align: "center",
+      responsive: ["md"],
       render: (_, record) => (
         <>{record.phoneNumber ? record.phoneNumber : "-"}</>
       ),
@@ -184,6 +189,32 @@ const UsersPage = () => {
     },
   ];
 
+  const getAllUsers = useCallback(async () => {
+    setLoading(true);
+    try {
+      const allUsers = await getUsers();
+
+      if (allUsers?.success && Array.isArray(allUsers?.data?.users)) {
+        dispatch(setUsers(allUsers.data.users));
+      } else {
+        notification.error({
+          message: "Error fetching users!",
+          placement: "top",
+        });
+      }
+      setLoading(false);
+    } catch (error) {
+      notification.error({
+        message: "Error fetching users!",
+        placement: "top",
+      });
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   return (
     <>
       <Dialogue
@@ -221,6 +252,7 @@ const UsersPage = () => {
                   block
                   loading={isUpdating}
                   disabled={isUpdating}
+                  style={{ backgroundColor: "#2F3645" }}
                 >
                   Change Password
                 </Button>
@@ -250,7 +282,7 @@ const UsersPage = () => {
       </Row>
       <Row>
         <Col span={24}>
-          <DataTable columns={COLUMNS} data={users} />
+          <DataTable columns={COLUMNS} data={users} loading={loading} />
         </Col>
       </Row>
     </>

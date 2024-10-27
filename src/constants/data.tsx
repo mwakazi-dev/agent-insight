@@ -45,20 +45,24 @@ export const COLUMNS: TableColumnsType<UserDataType> = [
   {
     title: "ID",
     dataIndex: "uid",
+    responsive: ["md"],
   },
   {
     title: "Email",
     dataIndex: "email",
+    responsive: ["md"],
   },
   {
     title: "Full Name",
     dataIndex: "displayName",
+    responsive: ["md"],
   },
   {
     title: "Phone Number",
     dataIndex: "phoneNumber",
     align: "center",
     render: (_, record) => <>{record.phoneNumber ? record.phoneNumber : "-"}</>,
+    responsive: ["md"],
   },
   {
     title: "Action",
