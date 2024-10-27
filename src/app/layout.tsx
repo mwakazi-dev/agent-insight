@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Roboto } from "next/font/google";
 
-import { getUser } from "@/lib/dal";
+import { getUser, getUsers } from "@/lib/dal";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import Providers from "@/components/Providers";
 import "./globals.css";
@@ -25,12 +25,19 @@ export default async function RootLayout({
 }>) {
   const user = await getUser();
 
+  const allUsers = await getUsers();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={fonts.className} suppressHydrationWarning>
         <AntdRegistry>
           <Providers>
-            <LayoutWrapper user={user?.data}>{children}</LayoutWrapper>
+            <LayoutWrapper
+              user={user?.data}
+              users={allUsers?.data?.users as any}
+            >
+              {children}
+            </LayoutWrapper>
           </Providers>
         </AntdRegistry>
       </body>

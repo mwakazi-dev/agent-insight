@@ -10,10 +10,11 @@ import { setUsers } from "@/slices/userSlice";
 
 interface Props {
   user: any;
+  users: any[];
   children: React.ReactNode;
 }
 
-const LayoutWrapper: FC<Props> = ({ children, user }) => {
+const LayoutWrapper: FC<Props> = ({ children, user, users }) => {
   const { setAuthState } = useAuth();
   const pathname = usePathname();
 
@@ -36,9 +37,11 @@ const LayoutWrapper: FC<Props> = ({ children, user }) => {
         error: null,
       });
     }
-
+    if (users?.length > 0) {
+      dispatch(setUsers(users));
+    }
     setMounted(true);
-  }, [setAuthState]);
+  }, [dispatch, setAuthState]);
 
   if (!mounted) {
     return <p>Loading...</p>;
