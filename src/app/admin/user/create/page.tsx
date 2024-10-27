@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Col, Form, Input, notification, Row } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Input,
+  notification,
+  Row,
+  Typography,
+} from "antd";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 
@@ -56,42 +65,62 @@ const CreateUser = () => {
   };
 
   return (
-    <Row justify="center" align="middle">
-      <Col span={8}>
-        <Form name="create-user" layout="vertical" onFinish={handleFinish}>
-          {FORM_USER_CREATE_INPUTS.map((input) => (
-            <Form.Item
-              key={input.name}
-              name={input.name}
-              label={input.label}
-              rules={input.rules}
-            >
-              {input.type === "email" && (
-                <Input type="email" size="large" autoComplete="off" />
-              )}
-              {input.type === "password" && (
-                <Input.Password size="large" autoComplete="off" />
-              )}
-              {(input.type === "text" ||
-                input.type === "tel" ||
-                input.type === "displayName") && (
-                <Input size="large" autoComplete="off" />
-              )}
-            </Form.Item>
-          ))}
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              size="large"
-              loading={loading}
-              disabled={loading}
-            >
-              Create User
-            </Button>
-          </Form.Item>
-        </Form>
+    <Row justify="center">
+      <Col xs={24} md={12}>
+        <Card>
+          <Row
+            justify="center"
+            align="middle"
+            style={{ marginBottom: "24px", margin: "16px auto" }}
+          >
+            <Col xs={24} md={12}>
+              <Typography.Title level={3}>Create Agent</Typography.Title>
+            </Col>
+          </Row>
+          <Row justify="center" align="middle">
+            <Col xs={24} md={12}>
+              <Form
+                name="create-user"
+                layout="vertical"
+                onFinish={handleFinish}
+              >
+                {FORM_USER_CREATE_INPUTS.map((input) => (
+                  <Form.Item
+                    key={input.name}
+                    name={input.name}
+                    label={input.label}
+                    rules={input.rules}
+                  >
+                    {input.type === "email" && (
+                      <Input type="email" size="large" autoComplete="off" />
+                    )}
+                    {input.type === "password" && (
+                      <Input.Password size="large" autoComplete="off" />
+                    )}
+                    {(input.type === "text" ||
+                      input.type === "tel" ||
+                      input.type === "displayName") && (
+                      <Input size="large" autoComplete="off" />
+                    )}
+                  </Form.Item>
+                ))}
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    block
+                    size="large"
+                    loading={loading}
+                    disabled={loading}
+                    style={{ backgroundColor: "#2F3645" }}
+                  >
+                    Create agent
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Col>
+          </Row>
+        </Card>
       </Col>
     </Row>
   );

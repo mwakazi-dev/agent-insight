@@ -13,7 +13,11 @@ export const getUsers = cache(async () => {
   try {
     const users = await getAuth().listUsers();
 
-    const allUsers = users.users.map((user) => ({
+    const filteredUsers = users.users.filter(
+      (user) => !user.customClaims?.admin
+    );
+
+    const allUsers = filteredUsers.map((user) => ({
       uid: user.uid,
       displayName: user.displayName,
       email: user.email,

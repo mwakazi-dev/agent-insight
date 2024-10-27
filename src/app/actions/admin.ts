@@ -160,3 +160,22 @@ export const fetchReports = async (filters: any) => {
     };
   }
 };
+
+export async function updateUserDetails(userId: string, values: any) {
+  try {
+    await getAuth().updateUser(userId, { ...values });
+
+    return {
+      status: StatusCodes.Ok,
+      success: true,
+      data: {},
+      message: "User updated successfully",
+    };
+  } catch {
+    return {
+      status: StatusCodes.BadRequest,
+      success: false,
+      message: "Unable to update user details",
+    };
+  }
+}

@@ -232,7 +232,9 @@ const UsersPage = () => {
 
       <Row>
         <Col>
-          <Typography.Title level={4}>Users</Typography.Title>
+          <Typography.Title level={3} style={{ fontWeight: "bold" }}>
+            Agents
+          </Typography.Title>
         </Col>
       </Row>
       <Row justify="end" style={{ marginBottom: "8px" }}>
@@ -240,8 +242,9 @@ const UsersPage = () => {
           <Button
             type="primary"
             onClick={() => router.push("/admin/user/create")}
+            style={{ backgroundColor: "#2F3645" }}
           >
-            Add User
+            Add Agent
           </Button>
         </Col>
       </Row>

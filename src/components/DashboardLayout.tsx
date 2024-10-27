@@ -1,7 +1,8 @@
 "use client";
-import { Button, Col, Layout, Menu, Row, Typography } from "antd";
+import { Button, Col, Grid, Layout, Menu, Row, Typography } from "antd";
 import React, { FC, useState } from "react";
 import {
+  EnvironmentOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -11,6 +12,7 @@ import { SIDER_MENU } from "@/constants/data";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { Roles } from "@/types/enums";
+import Logo from "./Logo";
 
 interface Props {
   children: any;
@@ -20,6 +22,8 @@ const DashboardLayout: FC<Props> = ({ children }) => {
   const { onLogout } = useAuth();
   const router = useRouter();
   const { authState } = useAuth();
+  const screen = Grid.useBreakpoint();
+  const isMobile = screen.xs;
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -34,7 +38,7 @@ const DashboardLayout: FC<Props> = ({ children }) => {
       <Layout.Sider
         trigger={null}
         collapsible
-        collapsed={collapsed}
+        collapsed={isMobile ? true : collapsed}
         theme="light"
         style={{
           display: "flex",
@@ -42,7 +46,20 @@ const DashboardLayout: FC<Props> = ({ children }) => {
           justifyContent: "center",
         }}
       >
-        <div className="demo-logo-vertical" />
+        <div
+          className="demo-logo-vertical"
+          style={{
+            paddingTop: "16px",
+            paddingBottom: "24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "#fff",
+            borderRadius: "4px",
+          }}
+        >
+          {!isMobile && <Logo />}
+        </div>
         {isAdmin && (
           <Menu
             theme="light"
@@ -50,6 +67,7 @@ const DashboardLayout: FC<Props> = ({ children }) => {
             defaultSelectedKeys={["1"]}
             items={SIDER_MENU as any}
             onSelect={handleSelect}
+            style={{ fontSize: "18px" }}
           />
         )}
       </Layout.Sider>
@@ -77,7 +95,11 @@ const DashboardLayout: FC<Props> = ({ children }) => {
                     <Col>
                       <Button
                         type="text"
-                        icon={<LogoutOutlined style={{ fontSize: "20px" }} />}
+                        icon={
+                          <LogoutOutlined
+                            style={{ fontSize: "20px", color: "grey" }}
+                          />
+                        }
                         onClick={onLogout}
                       >
                         Logout

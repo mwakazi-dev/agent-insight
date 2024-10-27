@@ -30,13 +30,13 @@ export const SIDER_MENU = [
   {
     key: "1",
     path: "admin/dashboard",
-    icon: <DashboardFilled />,
+    icon: <DashboardFilled style={{ fontSize: "18px", color: "grey" }} />,
     label: "Dashboard",
   },
   {
     key: "2",
     path: "admin",
-    icon: <UsergroupAddOutlined />,
+    icon: <UsergroupAddOutlined style={{ fontSize: "18px", color: "grey" }} />,
     label: "Agents",
   },
 ];
@@ -98,7 +98,7 @@ export const FORM_USER_CREATE_INPUTS = [
     label: "Phone Number",
     required: true,
     type: "tel",
-    rules: [{ required: true, message: "Please input your fullname!" }],
+    rules: [{ required: true, message: "Please input your phone number!" }],
   },
   {
     name: "email",

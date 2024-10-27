@@ -50,7 +50,7 @@ const DashboardPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Row>
         <Col span={24}>
           <ReportFilters
@@ -69,7 +69,7 @@ const DashboardPage = () => {
           <RealTimeMap agents={agents as any} />
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

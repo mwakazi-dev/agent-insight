@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   Button,
+  Card,
   Col,
   DatePicker,
   Form,
@@ -10,6 +11,7 @@ import {
   notification,
   Row,
   Select,
+  Typography,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -94,52 +96,78 @@ const Home = () => {
   };
 
   return (
-    <Row justify="center" align="middle">
-      <Col span={8}>
-        <Form
-          name="create-user"
-          layout="vertical"
-          form={form}
-          onFinish={handleFinish}
-          initialValues={dataCollected}
-          onValuesChange={onFieldChange}
-        >
-          {FORM_DATA_COLLECTION_INPUTS.map((input) => (
-            <Form.Item
-              key={input.name}
-              name={input.name}
-              label={input.label}
-              rules={input.rules}
-            >
-              {input.type === "select" && (
-                <Select options={input.options} size="large" />
-              )}
-              {input.type === "textarea" && <Input.TextArea rows={4} />}
+    <Row justify="center">
+      <Col xs={24} md={12}>
+        <Card>
+          <Row
+            justify="center"
+            align="middle"
+            style={{ marginBottom: "24px", margin: "16px auto" }}
+          >
+            <Col xs={24} md={12}>
+              <Row
+                justify="start"
+                align="middle"
+                style={{ marginBottom: "24px", margin: "16px " }}
+              >
+                <Col xs={24} md={12}>
+                  <Typography.Title level={3}>Create Agent</Typography.Title>
+                </Col>
+              </Row>
+              <Row justify="center" align="middle">
+                <Col xs={24} md={24}>
+                  <Form
+                    name="create-user"
+                    layout="vertical"
+                    form={form}
+                    onFinish={handleFinish}
+                    initialValues={dataCollected}
+                    onValuesChange={onFieldChange}
+                  >
+                    {FORM_DATA_COLLECTION_INPUTS.map((input) => (
+                      <Form.Item
+                        key={input.name}
+                        name={input.name}
+                        label={input.label}
+                        rules={input.rules}
+                      >
+                        {input.type === "select" && (
+                          <Select options={input.options} size="large" />
+                        )}
+                        {input.type === "textarea" && (
+                          <Input.TextArea rows={4} />
+                        )}
 
-              {input.type === "datePicker" && (
-                <DatePicker
-                  style={{ width: "100%" }}
-                  size="large"
-                  showTime
-                  format="YYYY-MM-DD HH:mm"
-                />
-              )}
-            </Form.Item>
-          ))}
+                        {input.type === "datePicker" && (
+                          <DatePicker
+                            style={{ width: "100%" }}
+                            size="large"
+                            showTime
+                            format="YYYY-MM-DD HH:mm"
+                          />
+                        )}
+                      </Form.Item>
+                    ))}
 
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              size="large"
-              loading={loading}
-              disabled={loading}
-            >
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        block
+                        size="large"
+                        loading={loading}
+                        disabled={loading}
+                        style={{ backgroundColor: "#536493" }}
+                      >
+                        Submit
+                      </Button>
+                    </Form.Item>
+                  </Form>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Card>
       </Col>
     </Row>
   );

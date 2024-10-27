@@ -6,6 +6,7 @@ import { Button, Form, Input, Row, Col, Typography } from "antd";
 import { StyledForm } from "@/styles/form";
 import { FORM_INPUTS } from "@/constants/data";
 import useAuth from "@/hooks/useAuth";
+import Logo from "@/components/Logo";
 
 const LoginPage: React.FC = () => {
   const { onLogin, isAuthenticating, authState } = useAuth();
@@ -17,14 +18,19 @@ const LoginPage: React.FC = () => {
 
   return (
     <Row justify="center" align="middle" style={{ minHeight: "100vh" }}>
-      <Col span={8}>
+      <Col xs={18} md={8}>
         <StyledForm name="login" onFinish={onFinish} layout="vertical">
+          <Row style={{ marginBottom: "16px" }}>
+            <Col span={24}>
+              <Logo />
+            </Col>
+          </Row>
           <Row justify="center">
             <Col span={8}>
               <Typography.Title level={2}>Login</Typography.Title>
             </Col>
           </Row>
-          <Row gutter={[16, 16]}>
+          <Row gutter={[16, 4]}>
             {FORM_INPUTS.map((input) => (
               <Col span={24} key={input.name}>
                 <Form.Item
@@ -59,6 +65,7 @@ const LoginPage: React.FC = () => {
               size="large"
               loading={isAuthenticating}
               disabled={isAuthenticating}
+              style={{ backgroundColor: "#536493" }}
             >
               Log in
             </Button>
